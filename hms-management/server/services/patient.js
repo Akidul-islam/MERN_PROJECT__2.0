@@ -3,8 +3,10 @@ const takeError = require('../utilities/error')
 
 const crudOperation = require('../services/rolesBaseActivity')
 
-// create patient
+//  patient can upate annd edit him/her profile
 const createPatientService = async(bodyData, user) =>{
+    // vai ekhne problem hocche ei data save hocce bt id save hocce na
+    // api endpoint http://localhost:8080/patients
     const data = {
         user_id:user._id,
         ...bodyData
