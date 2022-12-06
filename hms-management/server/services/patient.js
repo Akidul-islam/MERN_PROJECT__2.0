@@ -8,7 +8,7 @@ const createPatientService = async(bodyData, user) =>{
     // vai ekhne problem hocche ei data save hocce bt id save hocce na
     // api endpoint http://localhost:8080/patients
     const data = {
-        user_id:user._id,
+        userId:user._id,
         ...bodyData
     }
      return await crudOperation.dbCreateNewItem(Patient, data)
@@ -40,6 +40,11 @@ const singlePatinetService =async (patientId) =>{
     return patient
 }
 
+//patients update/edit his/her profile 
+const patientUpdateService = async (patientId, patientData) =>{
+    return await crudOperation.dbUpdateItem(Patient, '_id', patientId, patientData)
+}
+
 // deleted service
 const deletePatientService = async (patientId) =>{
     const patient = await crudOperation.dbFindPropertyById(Patient, '_id', patientId)
@@ -47,4 +52,4 @@ const deletePatientService = async (patientId) =>{
      return await crudOperation.dbDeletedItem(Patient, patientId)
 }
 
-module.exports={patientsService, createPatientService, singlePatinetService, deletePatientService}
+module.exports={patientsService, createPatientService, singlePatinetService, patientUpdateService,  deletePatientService}

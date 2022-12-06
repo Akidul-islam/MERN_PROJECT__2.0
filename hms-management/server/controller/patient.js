@@ -32,7 +32,7 @@ const getPatient =  async(req, res, next) =>{
    const {patientId} = req.params
    try {
       const patient = await service.singlePatinetService(patientId)
-       res.json({status:'success', data:patient})
+       res.status(200).json({status:'success', data:patient})
    } catch (error) {
       next(error)
    }
@@ -40,15 +40,22 @@ const getPatient =  async(req, res, next) =>{
 }
 
 // update is reusable functionlity
-const patchPatientUpdate =  (req, res, next) =>{
-   res.json({msg:'patient update'})
+const patchPatientUpdate = async (req, res, next) => {
+   const {patientId} = req.params
+ try {
+   const patient = await service.patientUpdateService(patientId, req.body)
+   res.status(200).json({ status:'success', patient})
+ } catch (error) {
+   next(error)
+ }
 }
 
+// deleted patient account
 const deletedPatients =  async (req, res, next) =>{
    const {patientId} = req.params
    try { 
       await service.deletePatientService(patientId)
-      res.json({ results:'succesfully delete patient'})
+      res.status(200).json({ results:'succesfully delete patient'})
 
    } catch (error) {
       next(error)

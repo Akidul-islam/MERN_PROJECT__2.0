@@ -1,27 +1,26 @@
+const takeError = require("../utilities/error")
 
 const dbGetItems =  (model, queryValue) => {
     return model.find(queryValue)
   }
   
   const dbFindPropertyById  =  (model,key,value) =>{
-  if(key === "_id"){
-      return model.findById(value)
-  }
+  if(key === "_id") return model.findById(value)
   return model.findOne({[key] :value})
   }
   
 //   create items
   const dbCreateNewItem = (model,data) => {
     // create new data
-return new model(data).save().then((daa) => console.log(daa))
+return new model(data).save()
   };
   
 //   updte by model,user,data
-  const dbUpdateItem = (model,userId, data ) =>{
-  const user = findUserByProperty('email', data.email)
-  if(!user) return res.status(400).json({msg:'user not exits'})
+  const dbUpdateItem = (model, key, keyValue, data ) =>{
+  const user = dbFindPropertyById(model, key, keyValue)
+  if(!user) throw takeError(`${model}: ${keyValue} Does not Exits`, 404)
   
-  return model.findByIdAndUpdate(userId, {...data}, {new:true})
+  return model.findByIdAndUpdate(keyValue, {...data}, {new:true})
   
   }
 
@@ -43,4 +42,4 @@ const dbQueryItem = async (queryValue) => {
 const dbDeletedItem = (model,userId) =>{
    return  model.findByIdAndDelete(userId)
 }
-  module.exports = {dbFindPropertyById,dbCreateNewItem,dbDeletedItem,dbGetItems}
+  module.exports = {dbFindPropertyById,dbCreateNewItem,dbDeletedItem,dbGetItems,dbUpdateItem}

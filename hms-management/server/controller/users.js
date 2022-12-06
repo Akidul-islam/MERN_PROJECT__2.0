@@ -1,5 +1,7 @@
 const users = require('../services/auth')
 const takeError = require('../utilities/error')
+
+// 
 const db = require('../services/users')
 
 const getUsers = async (req, res, next) =>{ 
@@ -17,19 +19,25 @@ const usersCreate =(req,res) =>{
     res.json({fjksj:'CREATE'})
 }
 
+// getSingle users
 const getUser = async (req, res) =>{
   const {id:userId} = req.params
-  const singleUser = await db.findUserByProperty('_id',userId)
-  if(!singleUser){
-    throw takeError('sorry not found', 400)
+
+  try {
+    const singleUser = await db.findUserByProperty('_id',userId)
+  if(!singleUser)  throw takeError('sorry user does not exits', 400)
+  res.status(200).json({userId, result:singleUser})
+
+  } catch (error) {
+    next(error)
   }
-  res.json({userId, result:singleUser})
+  
 }
  
 const patchUsersUpdate = async (req, res, next) => {
   const { name, password, password2} = req.body;
 	const { id:userId } = req.params;
-  if(password < 5) throw takeError('password will be greater than 5', 400)
+  if(password < 6) throw takeError('password will be greater than 5', 400)
    if (password !== password2) throw takeError('password does not match', 400)
 
 	try {

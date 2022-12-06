@@ -61,9 +61,9 @@ const queryService = async (queryValue) => {
 		if(name){
 			queryObj.name = {$regex :name, $options:'i'}
 		}
+		if(email) { queryObj.email = email}
+		 if(role) {queryObj.role = role}
 	}
-	// if(email) return queryObj.email = email
-    //  if(role) return queryObj.role = role
 	return await db.getUsers(queryObj)
 }
 
