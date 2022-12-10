@@ -1,9 +1,5 @@
-// schema modele import
-const Patient = require('../models/patientProfile')
 // serviceProvider
 const service = require('../services/patient')
-// errorHandler
-const takeError = require('../utilities/error')
 
 // post create patient
 const createPatient = async (req,res,next) => {
@@ -20,7 +16,7 @@ const getPatients = async (req, res, next) =>{
 
    try {
       const patients = await service.patientsService(req.query)
-      res.status(200).json({ status:'succes', patients})
+      res.status(200).json({ status:'succes', data:{ patients, isbn: patients.length }})
    
    } catch (error) {
       next(error)
@@ -44,7 +40,7 @@ const patchPatientUpdate = async (req, res, next) => {
    const {patientId} = req.params
  try {
    const patient = await service.patientUpdateService(patientId, req.body)
-   res.status(200).json({ status:'success', patient})
+   res.status(203).json({ status:'success', patient})
  } catch (error) {
    next(error)
  }

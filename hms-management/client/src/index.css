@@ -1,0 +1,86 @@
+@import url('../public/css/bootstrap.css');
+@import url('../public/css/font-awesome.min.css');
+@import url('../public/css/style.css');
+@import url('../public/css/responsive.css');
+@import url('../public/css/__profile.scss');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap');
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.profile-mt-1 {
+  margin-top: 2rem;
+  padding: 4px 0;
+}
+
+.edit-info {
+  background: rgb(78, 218, 164);
+  width: 100%;
+  color: whitesmoke;
+}
+.edit-info:hover {
+  color: white;
+}
+.save-change {
+  background: rgb(78, 218, 164);
+  width: 100%;
+  color: whitesmoke;
+}
+.save-change:hover {
+  color: white;
+}
+.logout-btn {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.2s ease-in;
+}
+
+.list-sub-link {
+  color: white;
+  transition: 0.3s ease-in;
+}
+.list-sub-link:hover {
+  color: white;
+  cursor: pointer;
+  background-color: rgba(167, 235, 203, 0.582);
+}
+
+.logout-btn:hover {
+  color: white;
+  background-color: rgba(207, 248, 231, 0.979);
+  cursor: pointer;
+}
+
+/* soclial icon */
+.book-app {
+  border: 0;
+  outline: none;
+  padding: 8px 0;
+  background: rgb(78, 218, 164);
+  color: whitesmoke;
+  width: 30%;
+  margin-top: 2rem;
+}
+
+.meeting {
+  border: '0';
+  padding: 0.5rem 2rem;
+  font-weight: 500;
+  font-size: 25px;
+  color: white;
+  background: rgb(0, 135, 139);
+  border-radius: 2px;
+}

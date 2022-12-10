@@ -25,12 +25,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  role:{
+  role:[{
     type:String,
     required:true,
-    enum:["PATIENT","DOCTOR", "ADMIN"],
     default:'PATIENT'
-  },
+  }],
   accountStatus:{
     type:String,
     enum:['Pending','Approved','Denied'],

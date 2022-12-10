@@ -37,27 +37,30 @@ const loginService = async ({ email, password}) => {
 };
 
 // user updatee services
-const updateService = async (userId,{name,password}) => {
+const updateService = async (userId,{name,password,role}) => {
 	const user = await db.findUserByProperty('_id',userId)
 	if (!user) {
 		throw takeError('User not found', 404);
 	}
+	if(password){
 	const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 	const hashMe = {
 		name,
 		password:hash
 	}
-	user.name = hashMe.name ?? user.name;
-user.password = hashMe.password ?? user.password
-	return await user.save();
+	user.password = hashMe.password ?? user.password
+}
+user.role = role ?? user.role;
+user.name = name ?? user.name;
+return await user.save();
 }
 
 // get all data and also query data servicess
 const queryService = async (queryValue) => {
 	const queryObj = {} 
 	if(queryValue){
-		const {name,email} = queryValue
+		const {name,email,role} = queryValue
 		if(name){
 			queryObj.name = {$regex :name, $options:'i'}
 		}

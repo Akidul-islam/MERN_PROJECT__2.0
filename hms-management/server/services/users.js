@@ -1,7 +1,7 @@
 const Users = require('../models/users')
 
 const getUsers =  (queryValue) => {
-  return  Users.find(queryValue)
+  return  Users.find(queryValue).select('-password')
 }
 
 const findUserByProperty  =  (key,value) =>{

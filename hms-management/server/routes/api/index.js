@@ -7,8 +7,10 @@ router.use('/api/v1',require('./auth'))
 
 // users endpoint
 router.use('/api/v1/users',authenticate, require('./users'))
-
-router.use('/api/v1/patients',require('./patient'))
+// patient Endpoint
+router.use('/api/v1/patients',authenticate,require('./patient'))
+// Doctor Endpoint
+router.use('/api/v1/doctors',authenticate,require('./patient'))
 
 // practice items
 

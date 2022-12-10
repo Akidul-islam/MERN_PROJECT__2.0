@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const profileSchema = new mongoose.Schema({
+const doctorSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Users"
@@ -8,10 +8,24 @@ const profileSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
-  
+  phone:{
+    type:String,
+    trim:true,
+    required:true,
+  },
+  age:{
+    type:String,
+    required:true,
+    default:'0'
+  },
+  address:{
+    type:String,
+    required:true,
+  },
   dmesId:{
       type:String,
-      required:true
+      trim:true,
+      required:true,
   },
   skills: {
     type: [String],
@@ -19,18 +33,8 @@ const profileSchema = new mongoose.Schema({
   },
   appointment_list:[
     {
-      patientId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Patient'
-      },
-      name:{
-        type:String,
-        required:true
-      },
-      date:{
-        type:Date,
-        default:new Date.now()
-      }
+        ref:'Appointment'
     }
   ],
   gigs: [
@@ -42,17 +46,6 @@ const profileSchema = new mongoose.Schema({
       company: {
         type: String,
         required: true
-      },
-      from: {
-        type: Date,
-        required: true
-      },
-      to: {
-        type: Date
-      },
-      current: {
-        type: Boolean,
-        default: false
       },
       description: {
         type: String
@@ -73,17 +66,6 @@ const profileSchema = new mongoose.Schema({
         type: String,
         required: true
       },
-      from: {
-        type: Date,
-        required: true
-      },
-      to: {
-        type: Date
-      },
-      current: {
-        type: Boolean,
-        default: false
-      },
       description: {
         type: String
       }
@@ -95,4 +77,4 @@ const profileSchema = new mongoose.Schema({
   }
 });
 
-module.exports = DoctorProfile = mongoose.model("DoctorProfile", profileSchema);
+module.exports = mongoose.model("Doctor", doctorSchema);

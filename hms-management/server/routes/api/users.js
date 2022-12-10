@@ -5,7 +5,7 @@ const users = require('../../controller/users')
 // user can deleted ,update and get single users by user email 
 router.route('/:id').get(users.getUser).patch(users.patchUsersUpdate).delete(users.usersDelete)
 
-router.route('/').post(users.usersCreate).get(users.getUsers)
+router.route('/').get(users.getUsers).post(users.usersCreate)
 module.exports = router;
 
 exports.restrictTO =

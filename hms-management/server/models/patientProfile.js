@@ -5,6 +5,16 @@ const patientSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'Users'
     },
+    avater:{
+      type:String,
+      default:'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-xsukd&psig=AOvVaw2w6qmgkmU6iKup_cpSG6z8&ust=1670523817465000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCMiUg6mQ6PsCFQAAAAAdAAAAABAE'
+    },
+    age:{
+      type:Number,
+      required:true,
+      trim:true,
+      default:0
+    },
     phone: {
       type: String,
     },
@@ -17,6 +27,17 @@ const patientSchema = new Schema({
     birthdate: {
       type: String,
     },
+    appointment:[
+      {
+        type:Schema.Types.ObjectId,
+        ref:'Appointment'
+
+      }
+    ],
+    isCompleted:{
+      type:Boolean,
+      default:false
+  }
   });
 
   module.exports = mongoose.model('Patient', patientSchema)
