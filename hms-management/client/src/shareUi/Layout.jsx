@@ -33,28 +33,31 @@ const Layout = ({ children }) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/about">
+                  <Link className="nav-link" to="/Doctor">
                     {' '}
-                    About{' '}
+                    Doctor{' '}
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/services">
+                  <Link className="nav-link" to="/patient">
                     {' '}
-                    Services{' '}
+                    Patient{' '}
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/appointment">
+                  <Link className="nav-link" to="/login">
                     {' '}
-                    Appointment{' '}
+                    Login{' '}
                   </Link>
                 </li>
               </ul>
               <form className="form-inline ">
-                <button className="btn nav_search-btn" type="submit">
-                  <i className="fa fa-search" aria-hidden="true"></i>
-                </button>
+                <Link to={'/searchpage'}>
+                  {' '}
+                  <button className="btn nav_search-btn" type="submit">
+                    <i className="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </Link>
               </form>
             </div>
           </nav>

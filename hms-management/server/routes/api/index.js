@@ -1,17 +1,24 @@
-const router = require('express').Router()
+const router = require('express').Router();
 // middlware
-const authenticate = require('../../middleware/auth')
+const authenticate = require('../../middleware/auth');
+const protectRouter = require('../../middleware/specifiUser');
 
 // auth endpoint
-router.use('/api/v1',require('./auth'))
+router.use('/api/v1', require('./auth'));
 
 // users endpoint
-router.use('/api/v1/users',authenticate, require('./users'))
+router.use('/api/v1/users', authenticate, protectRouter, require('./users'));
 // patient Endpoint
-router.use('/api/v1/patients',authenticate,require('./patient'))
+router.use(
+  '/api/v1/patients',
+  authenticate,
+  protectRouter,
+  require('./patient')
+);
 // Doctor Endpoint
-router.use('/api/v1/doctors',authenticate,require('./patient'))
+router.use('/api/v1/doctors', authenticate, protectRouter, require('./doctor'));
+// router.use('/api/v1/admin',authenticate,require('./patient'))
 
 // practice items
 
-module.exports = router 
+module.exports = router;

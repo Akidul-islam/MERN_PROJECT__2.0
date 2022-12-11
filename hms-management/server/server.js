@@ -4,8 +4,8 @@ const app = express();
 const connectDB = require('./config/db');
 const router = require('./routes/api/index');
 const ErrorHandler = require('./middleware/errorHandlerMiddleware/globalError');
-const PORT = process.env.PORT || 3000;
 require('dotenv').config();
+const PORT = process.env.PORT || 8080;
 const db = process.env.MONGOCONNECT;
 
 // practice
@@ -27,4 +27,4 @@ app.use(router);
 app.use(ErrorHandler);
 
 // I am listening you
-app.listen(PORT, () => console.log(`🏎  ✔ Server started on port ${PORT}`));
+app.listen(PORT, () => console.log(`🏎Server started on port ${PORT}`));
