@@ -1,6 +1,28 @@
 import React from 'react';
 
 const RegisterForm = () => {
+  const submitHander = (e) => {
+    e.preventDefault();
+    alert('Iam sumnot');
+  };
+
+  const {
+    formState: state,
+    handleBlur,
+    handleChange,
+    handleFocus,
+    handleSubmit,
+    clear,
+  } = useForm({ init, validate });
+
+  const cb = ({ hasError, values, errors }) => {
+    if (hasError) {
+      alert('[ERROR]' + JSON.stringify(errors));
+    } else {
+      alert('[SUCCESS]' + JSON.stringify(values));
+    }
+  };
+
   return (
     <section className="vh-90" style={{ backgroundColor: '#eee' }}>
       <div className="container h-80">
@@ -14,7 +36,7 @@ const RegisterForm = () => {
                       Sign up
                     </p>
 
-                    <form className="mx-1 mx-md-4">
+                    <form className="mx-1 mx-md-4" onSubmit={submitHander}>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
@@ -22,6 +44,7 @@ const RegisterForm = () => {
                             type="text"
                             id="form3Example1c"
                             className="form-control"
+                            name={'Name'}
                           />
                           <label
                             className="form-label"
@@ -39,6 +62,7 @@ const RegisterForm = () => {
                             type="email"
                             id="form3Example3c"
                             className="form-control"
+                            name={'Email'}
                           />
                           <label
                             className="form-label"
@@ -77,6 +101,7 @@ const RegisterForm = () => {
                           <label
                             className="form-label"
                             htmlFor="form3Example4cd"
+                            name={'RepeatPassword'}
                           >
                             Repeat your password
                           </label>
@@ -88,6 +113,7 @@ const RegisterForm = () => {
                           className="form-check-input me-2"
                           type="checkbox"
                           value=""
+                          name={'CheckBox'}
                           id="form2Example3c"
                         />
                         <label
