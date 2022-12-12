@@ -4,9 +4,9 @@ const { registerService, loginService } = require('../services/auth');
 const register = async (req, res, next) => {
   console.log(req.body);
   const { name, email, password, confirmPassword, role } = req.body;
-  if (!(name && email && password && confirmPassword)) {
-    throw takeError('invalid input enter', 400);
-  }
+  // if (!(name && email && password && confirmPassword)) {
+  //   throw takeError('invalid input enter', 400);
+  // }
   if (password < 6) throw takeError('password will be greater than 5', 404);
 
   if (password !== confirmPassword)

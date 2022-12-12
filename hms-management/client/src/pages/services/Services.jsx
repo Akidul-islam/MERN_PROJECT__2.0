@@ -1,6 +1,10 @@
+import Layout from '../../shareUi/Layout';
+
 const Services = () => {
   return (
-    <div>Services</div>
-  )
-}
-export default Services
+    <Layout>
+      <div>Services</div>;
+    </Layout>
+  );
+};
+export default Services;

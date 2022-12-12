@@ -1,22 +1,25 @@
 export const validate = (values) => {
   const errors = {};
 
-  if (!values.firstName) {
-    errors.firstName = 'First Name is Required';
+  if (!values.Name) {
+    errors.Name = ' Name is Required';
   }
 
-  if (!values.lastName) {
-    errors.lastName = 'Last Name is Required';
+  if (!values.Password) {
+    errors.Password = 'password is Required';
   }
 
-  if (!values.email) {
-    errors.email = 'Email is Required';
+  if (values.Password !== values.ConfirmPassword)
+    return (errors.Password = 'Does not match password');
+
+  if (!values.Email) {
+    errors.Email = 'Email is Required';
   }
 
-  if (!values.password) {
+  if (!values.ConfirmPassword) {
     errors.password = 'Password is Required';
-  } else if (values.password.length < 6) {
-    errors.password = 'Password length must be 6 character';
+  } else if (values.Password.length < 6) {
+    errors.Password = 'Password length must be 6 character';
   }
 
   return errors;

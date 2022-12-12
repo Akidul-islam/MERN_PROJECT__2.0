@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
       <header className="header_section">
         <div className="container-fluid">
           <nav className="navbar navbar-expand-lg custom_nav-container ">
-            <Link className="navbar-brand" path="/">
+            <Link className="navbar-brand" to="/">
               <h3 className="logo-color">
                 Clini<span className="logo-sub">carebd</span>
               </h3>
@@ -33,15 +33,15 @@ const Layout = ({ children }) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/Doctor">
+                  <Link className="nav-link" to="/about">
                     {' '}
-                    Doctor{' '}
+                    About{' '}
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/patient">
+                  <Link className="nav-link" to="/service">
                     {' '}
-                    Patient{' '}
+                    Services{' '}
                   </Link>
                 </li>
                 <li className="nav-item">

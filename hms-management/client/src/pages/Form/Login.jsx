@@ -1,15 +1,28 @@
 import { Link } from 'react-router-dom';
-
+import { validate } from '../../uitilities/formValidation';
+import useAuth from './useAuth';
 const LoginForm = () => {
+  const { changeHandler, LoginHandler, error, inputValue } = useAuth(
+    {
+      email: '',
+      password: '',
+    },
+    'http://localhost:3000/api/v1/login',
+    validate
+  );
+
   return (
     <section className="vh-100" style={{ backgroundColor: '#eee' }}>
       <div className="container h-80">
         <div
           className="row d-flex justify-content-center"
-          style={{ paddingTop: '4rem' }}
+          style={{ paddingTop: '0' }}
         >
-          <div className="col-lg-12 col-xl-11 ">
-            <div className="card text-black" style={{ borderRadius: '25px' }}>
+          <div className=" col-xl-11 ">
+            <div
+              className="card text-black"
+              style={{ borderRadius: '25px', padding: '0px' }}
+            >
               <div className="card-body p-md-5">
                 <div className="row justify-content-center align-item-center">
                   <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
@@ -17,7 +30,7 @@ const LoginForm = () => {
                       Login up
                     </p>
 
-                    <form className="mx-1 mx-md-4">
+                    <form className="mx-1 mx-md-4" onSubmit={LoginHandler}>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
@@ -26,6 +39,9 @@ const LoginForm = () => {
                             id="form3Example3c"
                             className="form-control"
                             placeholder="enter your email"
+                            value={inputValue.email}
+                            name={'email'}
+                            onChange={changeHandler}
                           />
                           <label
                             className="form-label"
@@ -43,6 +59,9 @@ const LoginForm = () => {
                             type="password"
                             id="form3Example4c"
                             className="form-control"
+                            name={'password'}
+                            value={inputValue.password}
+                            onChange={changeHandler}
                           />
                           <label
                             className="form-label"
@@ -58,23 +77,29 @@ const LoginForm = () => {
                           className="form-check-label"
                           htmlFor="form2Example3"
                         >
+                          Do you have already Accout ?
+                          <Link to={'/signup'}>SignUp</Link>
+                        </label>
+                      </div>
+                      <div className="form-check d-flex justify-content-center mb-5">
+                        <label
+                          className="form-check-label"
+                          htmlFor="form2Example3"
+                        >
                           you dont remmber your password?{' '}
                           <a href="#!">forget pasword</a>
                         </label>
                       </div>
 
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                        <Link to={'/patient'}>
-                          {' '}
-                          <button
-                            type="submit"
-                            className="btn btn-primary btn-lg edit-info"
-                            style={{ border: 0 }}
-                            onSubmit={(e) => e.prevenDefualt()}
-                          >
-                            Login
-                          </button>
-                        </Link>
+                        {' '}
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-lg edit-info"
+                          style={{ border: 0 }}
+                        >
+                          Login
+                        </button>
                       </div>
                     </form>
                   </div>

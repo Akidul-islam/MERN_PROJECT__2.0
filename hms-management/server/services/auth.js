@@ -10,7 +10,6 @@ const registerService = async ({ name, email, password, role }) => {
   const findUser = await db.findUserByProperty('email', email);
 
   if (findUser) throw takeError('User already exist', 400);
-
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password.toString(), salt);
   return await db.createNewUser({ name, email, password: hash, role });
@@ -31,7 +30,9 @@ const loginService = async ({ email, password }) => {
     role: user.role,
     accountStatus: user.accountStatus,
   };
-  return jwt.sign(payload, secret, { expiresIn: '6h' });
+  const token = jwt.sign(payload, secret, { expiresIn: '24h' });
+  user.token = token;
+  return token;
 };
 
 // user updatee services

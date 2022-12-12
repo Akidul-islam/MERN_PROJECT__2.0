@@ -126,3 +126,23 @@ const mapStateToKeys = (state, key) => {
     return acc;
   }, {});
 };
+
+
+// how to use this form 
+
+// const {
+//   formState: state,
+//   handleBlur,
+//   handleChange,
+//   handleFocus,
+//   handleSubmit,
+//   clear,
+// } = useForm({ init, validate });
+
+// const cb = ({ hasError, values, errors }) => {
+//   if (hasError) {
+//     alert('[ERROR]' + JSON.stringify(errors));
+//   } else {
+//     alert('[SUCCESS]' + JSON.stringify(values));
+//   }
+// };
