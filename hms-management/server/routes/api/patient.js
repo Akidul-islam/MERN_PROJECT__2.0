@@ -1,11 +1,10 @@
 const patientController = require('../../controller/patient');
 const router = require('express').Router();
-const authenticate = require('../../middleware/auth');
 
 // patient prefixing routes
 router
   .route('/')
-  .post(authenticate, patientController.createPatient)
+  .post(patientController.createPatient)
   .get(patientController.getPatients);
 
 router

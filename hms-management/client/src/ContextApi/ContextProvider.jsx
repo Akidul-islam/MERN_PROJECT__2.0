@@ -4,6 +4,13 @@ const authContext = createContext();
 
 const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(locatData('User'));
+  const [isEdited, setIsEdited] = useState(false);
+
+  // form editeable allow
+  const readAndWrite = (edited) => {
+    setIsEdited(edited);
+  };
+  // logout user
   const logOut = () => {
     localStorage.removeItem('User');
     localStorage.removeItem('Token');
@@ -13,7 +20,9 @@ const ContextProvider = ({ children }) => {
   const keepUser = (data) => setUser(data);
 
   return (
-    <authContext.Provider value={{ user, keepUser, logOut }}>
+    <authContext.Provider
+      value={{ user, isEdited, readAndWrite, keepUser, logOut }}
+    >
       {children}
     </authContext.Provider>
   );

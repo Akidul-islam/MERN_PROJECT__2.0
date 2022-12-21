@@ -1,23 +1,22 @@
 import { useState } from 'react';
 // context.api
 import { useUserContext } from '../ContextApi/ContextProvider';
-// get token and user from local stroage
 // api
 import api from '../ContextApi/Api/apiCrudOperation';
 
 export const useProfile = (initialValue) => {
-  const { user } = useUserContext();
-  const [singleData, setSingleData] = useState();
+  const { user, readAndWrite } = useUserContext();
+  // const [isEdited, setIsEdited] = useState(false);
+  // const [singleData, setSingleData] = useState();
   const [inputValue, setValue] = useState({ ...initialValue });
-  const [error, setError] = useState();
   const [isSucess, setIsSucess] = useState({
     loading: false,
-    id: '',
     successText: '',
     completed: false,
+    error: false,
   });
 
-  // endPoint
+  //role ways endPoint
   const urlEndPoint =
     user.role == 'patient'
       ? 'patients'
@@ -30,30 +29,44 @@ export const useProfile = (initialValue) => {
     setValue({ ...inputValue, [name]: value });
   };
   // profile save
-  const submitHandler = async (e) => {
+  const profileCreate = async (e) => {
     e.preventDefault();
     const userData = {
       fullName: inputValue.Name,
       phone: inputValue.Phone,
       address: inputValue.Address,
-      Age: 18,
+      age: inputValue.Age,
+      dmscId: inputValue.Dmsc,
       isCompleted: true,
     };
     try {
       setIsSucess({ ...isSucess, loading: true });
-      await api.postData(urlEndPoint, userData);
+      const postData = await api.postData(urlEndPoint, userData);
+      const {
+        data: { fullName, address, age, phone, dmscId },
+      } = postData.data;
       setIsSucess({
         ...isSucess,
         loading: false,
         successText: 'sucsss',
         completed: true,
+        error: false,
       });
-      setValue({ ...initialValue });
+      readAndWrite(false);
+      setValue({
+        Name: fullName,
+        Email: user.email,
+        Age: age,
+        Address: address,
+        Phone: phone,
+        Dmsc: dmscId,
+      });
     } catch (error) {
       setIsSucess({
         ...isSucess,
         loading: false,
         successText: '',
+        error: true,
       });
       setValue({ ...inputValue, Email: user.email });
       console.log(error.message);
@@ -62,21 +75,33 @@ export const useProfile = (initialValue) => {
 
   // getSingel users data
   const updateHandler = async () => {
-    const userData = {};
-    const res = await api.patchUpdate(
-      `${urlEndPoint}/${user.userId}`,
-      userData
-    );
-    setValue({ ...inputValue, Email: user.email });
-  };
-
-  const getSingleData = async () => {
     try {
-      const getData = await api.getOne(`${urlEndPoint}/${user.userId}`);
+      setValue({ ...inputValue, Email: user.email });
+      setIsSucess({ ...isSucess, loading: true });
+      // update data
+      const userData = {
+        fullName: inputValue.Name,
+        phone: inputValue.Phone,
+        address: inputValue.Address,
+        age: inputValue.Age,
+      };
+      await api.patchUpdate(`${urlEndPoint}/${user.userId}`, userData);
+      readAndWrite(false);
+      setIsSucess({ ...isSucess, loading: false });
+    } catch (error) {
+      setValue({ ...inputValue, Email: user.email });
+      readAndWrite(true);
+      console.log(error.message);
+    }
+  };
+  // get data by id
+  const getSingleData = async (id) => {
+    try {
+      const getData = await api.getOne(`${urlEndPoint}/${id}`);
       if (getData.data) {
         // setSingleData(getData.data);
         const {
-          data: { fullName, address, age, phone },
+          data: { fullName, address, age, phone, dmscId },
         } = getData.data;
         setValue({
           Name: fullName,
@@ -84,6 +109,7 @@ export const useProfile = (initialValue) => {
           Age: age,
           Address: address,
           Phone: phone,
+          Dmsc: dmscId,
         });
         setIsSucess({
           ...isSucess,
@@ -95,10 +121,9 @@ export const useProfile = (initialValue) => {
       setValue({ ...inputValue, Email: user.email });
     }
   };
-
   return {
     changeHandler,
-    submitHandler,
+    profileCreate,
     inputValue,
     updateHandler,
     isSucess,

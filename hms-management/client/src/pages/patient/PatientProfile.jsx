@@ -2,12 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ProfileForm from '../../component/ProfileForm';
 import { useUserContext } from '../../ContextApi/ContextProvider';
-import { useProfile } from '../../hook/useProfile';
 import Layout from '../../shareUi/Layout';
 import { patientNestedRoute } from '../../StaticData';
 const PatientProfile = () => {
-  const { user, logOut } = useUserContext();
-  const { isSucess } = useProfile();
+  const { user, logOut, readAndWrite } = useUserContext();
   if (!user) return <h2>Loading ......</h2>;
   return (
     <>
@@ -29,7 +27,12 @@ const PatientProfile = () => {
                         <h4>{user?.name}</h4>
                         <p className="text-secondary mb-1">{`ID: ${user?.userId}`}</p>
                         <p className="text-muted font-size-sm"></p>
-                        <button className="btn edit-info">EditProfile</button>
+                        <button
+                          className="btn edit-info"
+                          onClick={() => readAndWrite(true)}
+                        >
+                          EditProfile
+                        </button>
                       </div>
                     </div>
                     <hr className="my-4" />
@@ -59,10 +62,8 @@ const PatientProfile = () => {
                 </div>
               </div>
               <div className="col-lg-8">
-                <div className="card">
-                  {/* profile form */}
-                  <ProfileForm isSucess={isSucess} />
-                </div>
+                <div className="card"></div> {/* profile form */}
+                <ProfileForm />
                 {/* others stuff */}
                 <div className="row">
                   <div className="col-sm-12">

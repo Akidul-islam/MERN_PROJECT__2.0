@@ -4,7 +4,7 @@ import { useUserContext } from '../../ContextApi/ContextProvider';
 import Layout from '../../shareUi/Layout';
 import { doctorNestedRoute } from '../../StaticData';
 const DoctorProfile = () => {
-  const { user, logOut } = useUserContext();
+  const { user, logOut, readAndWrite } = useUserContext();
   return (
     <>
       <Layout>
@@ -27,7 +27,12 @@ const DoctorProfile = () => {
                         <p className="text-muted font-size-sm">
                           {user?.degree}
                         </p>
-                        <button className="btn edit-info">EditProfile</button>
+                        <button
+                          className="btn edit-info"
+                          onClick={readAndWrite}
+                        >
+                          EditProfile
+                        </button>
                       </div>
                     </div>
                     <hr className="my-4" />

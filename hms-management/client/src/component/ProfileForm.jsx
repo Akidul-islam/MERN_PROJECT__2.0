@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
+import { useUserContext } from '../ContextApi/ContextProvider';
 import { useProfile } from '../hook/useProfile';
 const ProfileForm = () => {
+  const { isEdited, user } = useUserContext();
   const {
-    submitHandler,
+    profileCreate,
     changeHandler,
     inputValue,
     updateHandler,
@@ -14,13 +16,14 @@ const ProfileForm = () => {
     Phone: '',
     Age: '',
     Address: '',
+    Dmsc: '',
   });
-
+  const { loading, error } = isSucess;
   useEffect(() => {
-    getSingleData();
-  }, []);
+    getSingleData(user.userId);
+  }, [user.userId]);
   return (
-    <form className="card-body" onSubmit={submitHandler}>
+    <form className="card-body" onSubmit={profileCreate}>
       <div className="row mb-3">
         <div className="col-sm-3">
           <h6 className="mb-0">Full Name</h6>
@@ -29,6 +32,7 @@ const ProfileForm = () => {
           <input
             type="text"
             className="form-control"
+            readOnly={isEdited ? false : true}
             value={inputValue.Name}
             onChange={changeHandler}
             name={'Name'}
@@ -44,6 +48,7 @@ const ProfileForm = () => {
             type="text"
             disabled
             className="form-control"
+            readOnly={isEdited ? false : true}
             value={inputValue.Email}
             onChange={changeHandler}
             name={'Email'}
@@ -58,6 +63,7 @@ const ProfileForm = () => {
           <input
             type="text"
             className="form-control"
+            readOnly={isEdited ? false : true}
             value={inputValue.Phone}
             onChange={changeHandler}
             name={'Phone'}
@@ -72,6 +78,7 @@ const ProfileForm = () => {
           <input
             type="text"
             className="form-control"
+            readOnly={isEdited ? false : true}
             value={inputValue.Address}
             onChange={changeHandler}
             name={'Address'}
@@ -84,8 +91,9 @@ const ProfileForm = () => {
         </div>
         <div className="col-sm-9 text-secondary">
           <input
-            type="number"
+            type="text"
             required
+            readOnly={isEdited ? false : true}
             className="form-control"
             value={inputValue.Age}
             onChange={changeHandler}
@@ -93,22 +101,45 @@ const ProfileForm = () => {
           />
         </div>
       </div>
+      {user.role.includes('doctor') && (
+        <div className="row mb-3">
+          <div className="col-sm-3">
+            <h6 className="mb-0">DMSC</h6>
+          </div>
+          <div className="col-sm-9 text-secondary">
+            <input
+              type="text"
+              required
+              readOnly={isEdited ? false : true}
+              className="form-control"
+              value={inputValue.Dmsc}
+              onChange={changeHandler}
+              name={'Dmsc'}
+            />
+          </div>
+        </div>
+      )}
       <div className="row">
-        <div className="col-sm-3"></div>
+        <div className="col-sm-3">
+          {loading && <h4>Loading...</h4>}
+          {error && <h4>please wait few seconds...</h4>}
+        </div>
         <div className="col-sm-9 text-secondary">
           {isSucess.completed ? (
             <input
-              type="submit"
+              type="button"
               className="btn btn-primary save-change px-4"
-              value={isSucess.loading ? 'data posting...' : 'UPDATE'}
-              onSubmit={updateHandler}
+              disabled={isEdited ? false : true}
+              value={loading ? 'data Updating...' : 'UPDATE'}
+              onClick={updateHandler}
             />
           ) : (
             <input
               type="submit"
               className="btn btn-primary save-change px-4"
-              value={isSucess.loading ? 'data posting...' : 'SAVE'}
-              onSubmit={submitHandler}
+              disabled={isEdited ? false : true}
+              value={loading ? 'data posting...' : 'SAVE'}
+              onSubmit={profileCreate}
             />
           )}
         </div>

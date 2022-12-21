@@ -1,5 +1,7 @@
 module.exports = (req, res, next) => {
-  if (req.user?.role[0].toLowerCase() === 'patient') return next();
-  if (req.user?.role[0].toLowerCase() === 'doctor') return next();
-  next();
+  if (req.user.role === 'admin' || req.user.role === 'doctor') {
+    next();
+  } else {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
 };

@@ -38,6 +38,7 @@ const getPatient = async (req, res, next) => {
 // update is reusable functionlity
 const patchPatientUpdate = async (req, res, next) => {
   const { patientId } = req.params;
+
   try {
     const patient = await service.patientUpdateService(patientId, req.body);
     res.status(203).json({ status: 'success', data: patient });

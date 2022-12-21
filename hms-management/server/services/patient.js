@@ -6,12 +6,13 @@ const crudOperation = require('../services/rolesBaseActivity');
 
 //  patient can upate annd edit him/her profile
 const createPatientService = async (bodyData, user) => {
+  // check  user profile exites or not
   const patientExits = await crudOperation.dbFindPropertyById(
     Patient,
     'userId',
     user._id
   );
-  // if (patientExits) throw takeError('already users exits', 404);
+  if (patientExits) throw takeError('already users exits', 404);
   const data = {
     userId: user._id,
     name: user.name,
@@ -19,6 +20,7 @@ const createPatientService = async (bodyData, user) => {
     role: user.role[0],
     ...bodyData,
   };
+  // create user profile
   const patient = await crudOperation.dbCreateNewItem(Patient, data);
   return patient;
 };
@@ -60,36 +62,43 @@ const singlePatinetService = async (patientId) => {
 const patientUpdateService = async (patientId, patientData) => {
   const patient = await crudOperation.dbFindPropertyById(
     Patient,
-    '_id',
+    'userId',
     patientId
   );
   if (!patient) throw takeError('does not exits', 404);
-  const user = await crudOperation.dbFindPropertyById(
-    Users,
-    '_id',
-    patient.userId
-  );
+  // const user = await crudOperation.dbFindPropertyById(
+  //   Users,
+  //   '_id',
+  //   patient.userId
+  // );
   //   2 ta id equal bt match kore na kano...?
-  if (patient.userId._id.toString() === user._id.toString()) {
-    (user.name = patientData.name ?? user.name),
-      (user.role[0] = patientData.role ?? user.role[0]);
-    await user.save();
-  }
+  // if (patient.userId._id.toString() === user._id.toString()) {
+  //   (user.name = patientData.name ?? user.name),
+  //     (user.role[0] = patientData.role ?? user.role[0]);
+  //   await user.save();
+  // }
 
-  (patient.address = patientData.address ?? patient.address),
-    (patient.phone = patientData.phone ?? patient.phone);
-  return patient;
+  patient.fullName = patientData.fullName ?? patient.fullName;
+  patient.address = patientData.address ?? patient.address;
+  patient.phone = patientData.phone ?? patient.phone;
+  patient.age = patientData.age ?? patient.age;
+
+  return await patient.save();
 };
 
 // deleted service
 const deletePatientService = async (patientId) => {
+  // patientId = client send user._id
   const patient = await crudOperation.dbFindPropertyById(
     Patient,
-    '_id',
+    'userId',
     patientId
   );
   if (!patient) throw takeError('user not exit', 400);
-  return await crudOperation.dbDeletedItem(Patient, patientId);
+  // patientProfile deleted
+  await crudOperation.dbDeletedItem(Patient, patient._id);
+  //  user deleted
+  await crudOperation.dbDeletedItem(Users, patientId);
 };
 
 module.exports = {

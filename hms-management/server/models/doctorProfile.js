@@ -1,80 +1,84 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const doctorSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Users"
+    ref: 'Users',
+  },
+  fullName: {
+    type: String,
+    trim: true,
+    required: true,
   },
   avatar: {
-    type: String
+    type: String,
   },
-  phone:{
-    type:String,
-    trim:true,
-    required:true,
+  phone: {
+    type: String,
+    trim: true,
+    required: true,
   },
-  age:{
-    type:String,
-    required:true,
-    default:'0'
+  age: {
+    type: String,
+    required: true,
+    default: '0',
   },
-  address:{
-    type:String,
-    required:true,
+  address: {
+    type: String,
+    required: true,
   },
-  dmesId:{
-      type:String,
-      trim:true,
-      required:true,
+  dmscId: {
+    type: String,
+    required: true,
   },
   skills: {
     type: [String],
-    required: true
+    required: true,
   },
-  appointment_list:[
+  appointment_list: [
     {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Appointment'
-    }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Appointment',
+    },
   ],
   gigs: [
     {
       title: {
         type: String,
-        required: true
+        required: true,
       },
       company: {
         type: String,
-        required: true
+        required: true,
       },
       description: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   ],
   education: [
     {
       school: {
         type: String,
-        required: true
+        required: true,
       },
       degree: {
         type: String,
-        required: true
+        required: true,
       },
       fieldofstudy: {
         type: String,
-        required: true
+        required: true,
       },
       description: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   ],
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model("Doctor", doctorSchema);
+module.exports = mongoose.model('Doctor', doctorSchema);

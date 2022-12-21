@@ -6,6 +6,8 @@ const crudOperation = require('../services/rolesBaseActivity');
 
 // doctor profile create
 const createDoctorService = async (bodyData, user) => {
+  // doctor profile already exits throw error
+  // check user profile exits or not
   const doctorExits = await crudOperation.dbFindPropertyById(
     Doctor,
     'userId',
@@ -19,7 +21,7 @@ const createDoctorService = async (bodyData, user) => {
     role: user.role[0],
     ...bodyData,
   };
-  console.log(data);
+  // create doctor profile
   const doctor = await crudOperation.dbCreateNewItem(Doctor, data);
   return doctor;
 };
@@ -46,12 +48,12 @@ const doctorsService = async (data) => {
   return await crudOperation.dbGetItems(Users, queryObject);
 };
 
-// singlePatients
-const singleDoctorService = async (doctorId) => {
+// singledoctors
+const singleDoctorService = async (userId) => {
   const doctor = await crudOperation.dbFindPropertyById(
     Doctor,
     'userId',
-    doctorId
+    userId
   );
   if (!doctor) throw takeError('doctor does not exits', 400);
   return await Doctor.findOne({ _id: doctor._id }).populate(
@@ -61,23 +63,25 @@ const singleDoctorService = async (doctorId) => {
 };
 
 //doctor update/edit his/her profile
-const doctorUpdateService = async (doctorId, doctorData, user) => {
+const doctorUpdateService = async (userId, doctorData) => {
   const doctor = await crudOperation.dbFindPropertyById(
     Doctor,
-    '_id',
-    doctorId
+    'userId',
+    userId
   );
-  if (!doctor) throw takeError('does not exits', 404);
+  if (!doctor) throw takeError('doctor does not found', 404);
   //   2 ta id equal bt match kore na kano...?
-  if (doctor.userId._id.toString() === user._id.toString()) {
-    (user.name = doctorData.name ?? user.name),
-      (user.role[0] = doctorData.role ?? user.role[0]);
-    await user.save();
-  }
+  // if (doctor.userId._id.toString() === user._id.toString()) {
+  //   (user.name = doctorData.name ?? user.name),
+  //     (user.role[0] = doctorData.role ?? user.role[0]);
+  //   await user.save();
+  // }
 
-  (doctor.address = doctorData.address ?? doctor.address),
-    (doctor.phone = doctorData.phone ?? doctor.phone);
-  return doctor;
+  doctor.fullName = doctorData.fullName ?? doctor.fullName;
+  doctor.address = doctorData.address ?? doctor.address;
+  doctor.phone = doctorData.phone ?? doctor.phone;
+  doctor.age = doctorData.age ?? doctor.age;
+  return await doctor.save();
 };
 
 // deleted service
