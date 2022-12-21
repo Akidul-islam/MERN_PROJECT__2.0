@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
-const InitialValue = {
-  Name: 'Akidul islam',
-  Email: 'john@example.com',
-  Phone: '(+088) 816-9029',
-  Age: '18',
-  Address: 'Dhaka, Rajshahi, Bangladesh',
-  Sex: 'Women',
-};
+import React, { useEffect } from 'react';
+import { useProfile } from '../hook/useProfile';
 const ProfileForm = () => {
-  const [inputValue, setValue] = useState({ ...InitialValue });
-  // formControll later add custom hook
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setValue({ ...inputValue, [name]: value });
-  };
+  const {
+    submitHandler,
+    changeHandler,
+    inputValue,
+    updateHandler,
+    isSucess,
+    getSingleData,
+  } = useProfile({
+    Name: '',
+    Email: '',
+    Phone: '',
+    Age: '',
+    Address: '',
+  });
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    alert({ msg: inputValue });
-    setValue({ ...InitialValue });
-  };
-
+  useEffect(() => {
+    getSingleData();
+  }, []);
   return (
-    <div className="card-body">
+    <form className="card-body" onSubmit={submitHandler}>
       <div className="row mb-3">
         <div className="col-sm-3">
           <h6 className="mb-0">Full Name</h6>
@@ -44,6 +42,7 @@ const ProfileForm = () => {
         <div className="col-sm-9 text-secondary">
           <input
             type="text"
+            disabled
             className="form-control"
             value={inputValue.Email}
             onChange={changeHandler}
@@ -97,15 +96,24 @@ const ProfileForm = () => {
       <div className="row">
         <div className="col-sm-3"></div>
         <div className="col-sm-9 text-secondary">
-          <input
-            type="submit"
-            className="btn btn-primary save-change px-4"
-            value="Save Changes"
-            onSubmit={submitHandler}
-          />
+          {isSucess.completed ? (
+            <input
+              type="submit"
+              className="btn btn-primary save-change px-4"
+              value={isSucess.loading ? 'data posting...' : 'UPDATE'}
+              onSubmit={updateHandler}
+            />
+          ) : (
+            <input
+              type="submit"
+              className="btn btn-primary save-change px-4"
+              value={isSucess.loading ? 'data posting...' : 'SAVE'}
+              onSubmit={submitHandler}
+            />
+          )}
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

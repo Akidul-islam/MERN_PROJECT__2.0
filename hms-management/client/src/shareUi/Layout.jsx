@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../ContextApi/ContextProvider';
 const Layout = ({ children }) => {
+  const { user } = useUserContext();
+  // const user = true;
   return (
     <>
       <header className="header_section">
@@ -44,12 +47,21 @@ const Layout = ({ children }) => {
                     Services{' '}
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">
-                    {' '}
-                    Login{' '}
-                  </Link>
-                </li>
+                {user ? (
+                  <li className="nav-item">
+                    <Link className="nav-link" to={`/${user?.role}`}>
+                      {' '}
+                      profile{' '}
+                    </Link>
+                  </li>
+                ) : (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">
+                      {' '}
+                      Login{' '}
+                    </Link>
+                  </li>
+                )}
               </ul>
               <form className="form-inline ">
                 <Link to={'/searchpage'}>

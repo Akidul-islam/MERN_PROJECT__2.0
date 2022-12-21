@@ -2,11 +2,11 @@ export const validate = (values) => {
   const errors = {};
 
   if (!values.Name) {
-    errors.Name = ' Name is Required';
+    return (errors.Name = ' Name is Required');
   }
 
   if (!values.Password) {
-    errors.Password = 'password is Required';
+    return (errors.Password = 'password is Required');
   }
 
   if (values.Password !== values.ConfirmPassword)

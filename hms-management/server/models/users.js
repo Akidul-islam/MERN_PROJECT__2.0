@@ -29,6 +29,7 @@ const UserSchema = new mongoose.Schema({
     {
       type: String,
       required: true,
+      enum: ['patient', 'doctor', 'admin'],
       default: 'patient',
     },
   ],

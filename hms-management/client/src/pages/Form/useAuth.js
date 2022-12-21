@@ -1,11 +1,18 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../ContextApi/Api/apiCrudOperation';
+import { useUserContext } from '../../ContextApi/ContextProvider';
 
 const useAuth = (initailValue, url, validate) => {
-  const navigate = useNavigate();
+  const { keepUser } = useUserContext();
   const [inputValue, setInputValue] = useState({ ...initailValue });
-  const [error, setError] = useState({});
+  const [error, setError] = useState();
+  const [status, setStatus] = useState({
+    loading: false,
+    errors: '',
+    welcome: '',
+  });
+  const navigate = useNavigate();
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -14,10 +21,9 @@ const useAuth = (initailValue, url, validate) => {
       [name]: value,
     });
   };
-
+  // regiserr submit function
   const submitHandler = async (e) => {
     e.preventDefault();
-
     setError(validate(inputValue));
     const lowCasekey = {
       name: inputValue.Name,
@@ -27,31 +33,47 @@ const useAuth = (initailValue, url, validate) => {
       role: inputValue.Role,
     };
     try {
-      const respose = await axios.post(url, lowCasekey);
-      console.log(respose);
+      // const res = await axios.post(url, lowCasekey);
+      const res = await api.authPost(url, lowCasekey);
+      setStatus({ ...status, welcome: res.data.username });
       setInputValue({ ...initailValue });
+      navigate('/login');
     } catch (error) {
       console.log(error);
+      navigate('/signup');
     }
   };
 
+  // user login process
   const LoginHandler = async (e) => {
     e.preventDefault();
+    setStatus({ ...status, loading: true });
     const lowerCaseKey = {
       email: inputValue.email,
       password: inputValue.password,
     };
-    setError(validate(inputValue));
-
     try {
-      const respones = await axios.post(url, lowerCaseKey);
-      const { token } = await respones.data;
-      if (token) {
-        navigate('/patient');
+      // const respones = await axios.post(url, lowerCaseKey);
+      const respones = await api.authPost(url, lowerCaseKey);
+      const { token, results } = respones.data;
+      if (token && results) {
+        localStorage.setItem('Token', JSON.stringify(token));
+        localStorage.setItem('User', JSON.stringify(results));
+        keepUser(results);
+        setStatus({ ...status, loading: false });
+        if (results.role.includes('patient')) {
+          navigate('/patient');
+        } else if (results.role.includes('doctor')) {
+          return navigate('/doctor');
+        } else {
+          navigate('/admin');
+        }
       }
-      return respones;
     } catch (error) {
-      console.log(error);
+      localStorage.removeItem('Token');
+      navigate('/login');
+      setStatus({ ...status, loading: false, errors: 'invalid enter' });
+      console.log(error.message);
     }
   };
 
@@ -65,6 +87,7 @@ const useAuth = (initailValue, url, validate) => {
     checkedFun,
     error,
     LoginHandler,
+    status,
   };
 };
 

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { validate } from '../../uitilities/formValidation';
 import useAuth from './useAuth';
 const LoginForm = () => {
-  const { changeHandler, LoginHandler, error, inputValue } = useAuth(
+  const { changeHandler, LoginHandler, status, inputValue } = useAuth(
     {
       email: '',
       password: '',
@@ -10,7 +10,6 @@ const LoginForm = () => {
     'http://localhost:3000/api/v1/login',
     validate
   );
-
   return (
     <section className="vh-100" style={{ backgroundColor: '#eee' }}>
       <div className="container h-80">
@@ -28,9 +27,12 @@ const LoginForm = () => {
                   <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                     <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                       Login up
+                      {status && status?.welcome && <h3>{status.welcome}</h3>}
                     </p>
 
                     <form className="mx-1 mx-md-4" onSubmit={LoginHandler}>
+                      {status && status.loading && <p>loading...</p>}
+                      {status && status.errors && <p>some thing wrong</p>}
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">

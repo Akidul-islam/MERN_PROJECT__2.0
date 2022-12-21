@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ProfileForm from '../../component/ProfileForm';
+import { useUserContext } from '../../ContextApi/ContextProvider';
+import { useProfile } from '../../hook/useProfile';
 import Layout from '../../shareUi/Layout';
 import { patientNestedRoute } from '../../StaticData';
-import ProfileForm from './ProfileForm';
 const PatientProfile = () => {
+  const { user, logOut } = useUserContext();
+  const { isSucess } = useProfile();
+  if (!user) return <h2>Loading ......</h2>;
   return (
     <>
       <Layout>
@@ -21,13 +26,9 @@ const PatientProfile = () => {
                         width="110"
                       />
                       <div className="mt-3">
-                        <h4>John Doe</h4>
-                        <p className="text-secondary mb-1">
-                          Full Stack Developer
-                        </p>
-                        <p className="text-muted font-size-sm">
-                          Bay Area, San Francisco, CA
-                        </p>
+                        <h4>{user?.name}</h4>
+                        <p className="text-secondary mb-1">{`ID: ${user?.userId}`}</p>
+                        <p className="text-muted font-size-sm"></p>
                         <button className="btn edit-info">EditProfile</button>
                       </div>
                     </div>
@@ -49,7 +50,9 @@ const PatientProfile = () => {
                         );
                       })}
                       <li className="list-group-item border-bottom logout-btn">
-                        <a className="text-secondary ">Logout</a>
+                        <a className="text-secondary " onClick={logOut}>
+                          Logout
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -58,7 +61,7 @@ const PatientProfile = () => {
               <div className="col-lg-8">
                 <div className="card">
                   {/* profile form */}
-                  <ProfileForm />
+                  <ProfileForm isSucess={isSucess} />
                 </div>
                 {/* others stuff */}
                 <div className="row">

@@ -4,19 +4,18 @@ import { validate } from '../../uitilities/formvalidation';
 import useAuth from './useAuth';
 
 const RegisterForm = () => {
-  const { changeHandler, submitHandler, inputValue, checkedFun, error } =
-    useAuth(
-      {
-        Name: '',
-        Email: '',
-        Password: '',
-        ConfirmPassword: '',
-        Role: '',
-        CheckBox: false,
-      },
-      'http://localhost:3000/api/v1/register',
-      validate
-    );
+  const { changeHandler, submitHandler, inputValue, checkedFun } = useAuth(
+    {
+      Name: '',
+      Email: '',
+      Password: '',
+      ConfirmPassword: '',
+      Role: '',
+      CheckBox: false,
+    },
+    'register',
+    validate
+  );
   return (
     <Layout>
       <section className="vh-90" style={{ backgroundColor: '#eee' }}>

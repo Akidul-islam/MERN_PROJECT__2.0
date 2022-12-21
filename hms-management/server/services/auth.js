@@ -31,8 +31,7 @@ const loginService = async ({ email, password }) => {
     accountStatus: user.accountStatus,
   };
   const token = jwt.sign(payload, secret, { expiresIn: '24h' });
-  user.token = token;
-  return token;
+  return { user, token };
 };
 
 // user updatee services

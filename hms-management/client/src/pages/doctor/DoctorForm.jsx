@@ -1,17 +1,4 @@
 const DoctorForm = () => {
-  const [inputValue, setValue] = useState({ ...InitialValue });
-  // formControll later add custom hook
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setValue({ ...inputValue, [name]: value });
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    alert({ msg: inputValue });
-    setValue({ ...InitialValue });
-  };
-
   return (
     <div className="card-body">
       <div className="row mb-3">
@@ -48,7 +35,7 @@ const DoctorForm = () => {
         </div>
         <div className="col-sm-9 text-secondary">
           <input
-            type="text"
+            type="number"
             className="form-control"
             value={inputValue.Phone}
             onChange={changeHandler}
@@ -77,7 +64,6 @@ const DoctorForm = () => {
         <div className="col-sm-9 text-secondary">
           <input
             type="number"
-            required
             className="form-control"
             value={inputValue.Age}
             onChange={changeHandler}

@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import ProfileForm from '../../component/ProfileForm';
+import { useUserContext } from '../../ContextApi/ContextProvider';
 import Layout from '../../shareUi/Layout';
 import { doctorNestedRoute } from '../../StaticData';
-import ProfileForm from '../patient/ProfileForm';
 const DoctorProfile = () => {
+  const { user, logOut } = useUserContext();
   return (
     <>
       <Layout>
@@ -20,12 +22,10 @@ const DoctorProfile = () => {
                         width="110"
                       />
                       <div className="mt-3">
-                        <h4>John Doe</h4>
-                        <p className="text-secondary mb-1">
-                          Full Stack Developer
-                        </p>
+                        <h4>{user?.name}</h4>
+                        <p className="text-secondary mb-1">{user?.category}</p>
                         <p className="text-muted font-size-sm">
-                          Bay Area, San Francisco, CA
+                          {user?.degree}
                         </p>
                         <button className="btn edit-info">EditProfile</button>
                       </div>
@@ -48,7 +48,9 @@ const DoctorProfile = () => {
                         );
                       })}
                       <li className="list-group-item border-bottom logout-btn">
-                        <a className="text-secondary ">Logout</a>
+                        <a className="text-secondary " onClick={logOut}>
+                          Logout
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -73,10 +75,7 @@ const DoctorProfile = () => {
                             elit. Libero, accusamus suscipit? Quibusdam aliquid
                             nisi accusamus, beatae omnis iusto! Qui illo
                             doloremque nobis quas, dolores, iste asperiores
-                            exercitationem tenetur enim blanditiis quam mollitia
-                            assumenda officiis nisi, officia nulla omnis dolore
-                            ad velit? Corrupti perferendis quia sed esse odio
-                            natus numquam delectus!
+                            exercitationem tenetur enim blanditiis
                           </p>
                           <div
                             style={{
