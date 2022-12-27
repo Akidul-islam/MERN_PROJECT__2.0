@@ -1,7 +1,12 @@
 import { createContext, useContext, useState } from 'react';
 import { locatData } from '../uitilities/localStore';
 const authContext = createContext();
-
+// {
+//   email: 'akidul@gmail.com',
+//   role: 'doctor',
+//   name: 'akidul islam',
+// }
+// locatData('User')
 const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(locatData('User'));
   const [isEdited, setIsEdited] = useState(false);

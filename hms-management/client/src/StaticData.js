@@ -2,34 +2,34 @@ const patientNestedRoute = [
   {
     id: 1,
     link: 'Appointment History',
-    path: '/appointment history',
+    path: 'appointment',
   },
   {
     id: 2,
     link: 'Payment History',
-    path: '/paymenthistory',
+    path: 'payment',
   },
   {
     id: 3,
     link: 'Medical History',
-    path: '/medicalhistory',
+    path: 'medical',
   },
 ];
 const doctorNestedRoute = [
   {
     id: 1,
     link: 'Wallet',
-    path: '/wallet',
+    path: 'wallet',
   },
   {
     id: 2,
     link: 'Appointment History',
-    path: '/appointment-history',
+    path: 'appointment',
   },
   {
     id: 3,
     link: 'Transition',
-    path: '/transition-history',
+    path: 'transition',
   },
 ];
 

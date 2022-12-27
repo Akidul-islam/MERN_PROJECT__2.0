@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import ProfileForm from '../../component/ProfileForm';
+import { Link, Outlet } from 'react-router-dom';
 import { useUserContext } from '../../ContextApi/ContextProvider';
 import Layout from '../../shareUi/Layout';
 import { patientNestedRoute } from '../../StaticData';
@@ -37,14 +36,13 @@ const PatientProfile = () => {
                     </div>
                     <hr className="my-4" />
                     <ul className="list-group list-group-flush">
-                      {/* map using */}
                       {patientNestedRoute.map((route) => {
                         return (
                           <li
                             key={route.id}
                             className="list-sub-link list-group-item d-flex justify-content-between align-items-center flex-wrap"
                           >
-                            <Link>
+                            <Link to={route.path}>
                               <span className="text-secondary">
                                 {route.link}
                               </span>
@@ -61,50 +59,7 @@ const PatientProfile = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-8">
-                <div className="card"></div> {/* profile form */}
-                <ProfileForm />
-                {/* others stuff */}
-                <div className="row">
-                  <div className="col-sm-12">
-                    <div className="card">
-                      <div className="card-body">
-                        <h5 className="d-flex align-items-center mb-3">
-                          Doctor descripation
-                        </h5>
-                        <div className="d-flex">
-                          <p style={{ maxWidth: '50%' }}>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing
-                            elit. Libero, accusamus suscipit? Quibusdam aliquid
-                            nisi accusamus, beatae omnis iusto! Qui illo
-                            doloremque nobis quas, dolores, iste asperiores
-                            exercitationem tenetur enim blanditiis quam mollitia
-                            assumenda officiis nisi, officia nulla omnis dolore
-                            ad velit? Corrupti perferendis quia sed esse odio
-                            natus numquam delectus!
-                          </p>
-                          <div
-                            style={{
-                              width: '50%',
-                              height: '300px',
-                              overflow: 'hidden',
-                              borderRadius: '0.7rem',
-                            }}
-                          >
-                            <img
-                              src="https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125_960_720.jpg"
-                              alt="doctorImage"
-                            />
-                          </div>
-                        </div>
-                        <button className="save-change book-app">
-                          Book Appointment
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Outlet />
             </div>
           </div>
         </div>

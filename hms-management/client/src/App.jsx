@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { useUserContext } from './ContextApi/ContextProvider';
 // role base access user
 import PrivateRoute from './component/PrivateRoute';
 // if user seach wrong page show the error
@@ -10,9 +11,15 @@ import LoginForm from './pages/Form/Login';
 import RegisterForm from './pages/Form/RegisterForm';
 import Home from './pages/home/Home';
 
-import { useUserContext } from './ContextApi/ContextProvider';
 import DoctorProfile from './pages/doctor/DoctorProfile';
 import PatientProfile from './pages/patient/PatientProfile';
+
+import PrimaryDetails from './component/PrimaryDetails';
+import AppointmentHistory from './pages/appointment/AppointmentHistory';
+import MedicalHistory from './pages/appointment/MedicalHistory';
+import PatientPayment from './pages/appointment/PatientPayment';
+import Wallet from './pages/doctor/Wallet';
+import BookAppointment from './pages/home/BookAppointment';
 import Services from './pages/services/Services';
 function App() {
   const { user } = useUserContext();
@@ -31,7 +38,17 @@ function App() {
             />
           }
         >
-          <Route path="/patient" element={<PatientProfile user={user} />} />
+          <Route path="patient" element={<PatientProfile user={user} />}>
+            <Route index element={<PrimaryDetails />} />
+            <Route path={'primarydetails'} element={<PrimaryDetails />} />
+            <Route path={'appointment'} element={<AppointmentHistory />} />
+            <Route
+              path={'payment'}
+              element={<PatientPayment userName={'Doctor Name'} />}
+            />
+            <Route path={'medical'} element={<MedicalHistory />} />
+            <Route path={'booking'} element={<BookAppointment />} />
+          </Route>
         </Route>
 
         <Route
@@ -39,7 +56,16 @@ function App() {
             <PrivateRoute isAllowed={!!user && user.role?.includes('doctor')} />
           }
         >
-          <Route path="/doctor" element={<DoctorProfile />} />
+          <Route path="doctor" element={<DoctorProfile />}>
+            <Route index element={<PrimaryDetails />} />
+            <Route path={'primarydetails'} element={<PrimaryDetails />} />
+            <Route path={'wallet'} element={<Wallet />} />
+            <Route path={'appointment'} element={<AppointmentHistory />} />
+            <Route
+              path={'transition'}
+              element={<PatientPayment userName={'Patient Name'} />}
+            />
+          </Route>
         </Route>
         <Route path="/searchpage" element={<SearchTermPage />} />
 

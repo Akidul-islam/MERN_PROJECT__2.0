@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import ProfileForm from '../../component/ProfileForm';
+import { Link, Outlet } from 'react-router-dom';
 import { useUserContext } from '../../ContextApi/ContextProvider';
 import Layout from '../../shareUi/Layout';
 import { doctorNestedRoute } from '../../StaticData';
@@ -44,7 +43,7 @@ const DoctorProfile = () => {
                             key={route.id}
                             className="list-sub-link list-group-item d-flex justify-content-between align-items-center flex-wrap"
                           >
-                            <Link>
+                            <Link to={route.path}>
                               <span className="text-secondary">
                                 {route.link}
                               </span>
@@ -61,12 +60,11 @@ const DoctorProfile = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-8">
+              <Outlet />
+              {/* <div className="col-lg-8">
                 <div className="card">
-                  {/* profile form */}
                   <ProfileForm />
                 </div>
-                {/* others stuff */}
                 <div className="row">
                   <div className="col-sm-12">
                     <div className="card">
@@ -103,7 +101,7 @@ const DoctorProfile = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
