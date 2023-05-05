@@ -1,0 +1,128 @@
+@import url('../public/css/bootstrap.css');
+@import url('../public/css/font-awesome.min.css');
+@import url('../public/css/style.css');
+@import url('../public/css/responsive.css');
+@import url('../public/css/__profile.scss');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.profile-mt-1 {
+  margin-top: 2rem;
+  padding: 4px 0;
+}
+
+.edit-info {
+  background: rgb(78, 218, 164);
+  width: 100%;
+  color: whitesmoke;
+}
+.edit-info:hover {
+  color: white;
+}
+.save-change {
+  background: rgb(78, 218, 164);
+  width: 100%;
+  color: whitesmoke;
+}
+.save-change:hover {
+  color: white;
+}
+.logout-btn {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.2s ease-in;
+}
+
+.list-sub-link {
+  color: white;
+  transition: 0.3s ease-in;
+}
+.list-sub-link:hover {
+  color: white;
+  cursor: pointer;
+  background-color: rgba(167, 235, 203, 0.582);
+}
+
+.logout-btn:hover {
+  color: white;
+  background-color: rgba(207, 248, 231, 0.979);
+  cursor: pointer;
+}
+
+/* soclial icon */
+.book-app {
+  border: 0;
+  outline: none;
+  padding: 8px 0;
+  background: rgb(78, 218, 164);
+  color: whitesmoke;
+  width: 30%;
+  margin-top: 2rem;
+}
+
+.whatsapp {
+  position: relative;
+}
+
+.whatsapp-right {
+  position: absolute;
+  right: 1rem;
+}
+
+.search-input {
+  border: 4px solid whitesmoke;
+  outline: none;
+  text-align: center;
+  width: 50%;
+  border-radius: 3rem;
+}
+
+/* patient payment history */
+.table th {
+  font-weight: 500;
+  color: #827fc0;
+}
+.table thead {
+  background-color: #f3f2f7;
+}
+.table > tbody > tr > td,
+.table > tfoot > tr > td,
+.table > thead > tr > td {
+  padding: 14px 12px;
+  vertical-align: middle;
+}
+.table tr td {
+  color: #8887a9;
+}
+.thumb-sm {
+  height: 32px;
+  width: 32px;
+}
+.badge-soft-warning {
+  background-color: rgba(248, 201, 85, 0.2);
+  color: #f8c955;
+}
+
+.badge {
+  font-weight: 500;
+}
+.badge-soft-primary {
+  background-color: rgba(96, 93, 175, 0.2);
+  color: #605daf;
+}

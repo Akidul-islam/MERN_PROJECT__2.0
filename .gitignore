@@ -1,2 +1,7 @@
+<<<<<<< HEAD
+/hms-management/node_modules
+
+=======
 node_modules
+>>>>>>> project_base
 .env
