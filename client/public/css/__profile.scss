@@ -1,0 +1,28 @@
+/* // patient profile */
+.profile-mt-1 {
+  margin-top: 2rem;
+  padding: 4px 0;
+}
+
+.logout-btn {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.2s ease-in;
+}
+
+.list-sub-link {
+  color: white;
+  transition: 0.3s ease-in;
+}
+.list-sub-link:hover {
+  color: white;
+  background-color: rgba(207, 248, 231, 0.979);
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  color: white;
+  background-color: rgba(198, 211, 205, 0.664);
+  cursor: pointer;
+}
