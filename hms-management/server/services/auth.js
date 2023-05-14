@@ -1,24 +1,75 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const takeError = require('../utilities/error');
-const db = require('./users');
+const Users = require('../models/users');
+const Patients = require('../models/patientProfile');
+const Doctors = require('../models/doctorProfile');
+const Admin = require('../models/admin');
+const crudOperation = require('../services/rolesBaseActivity');
 require('dotenv').config();
 const secret = process.env.JWTSECRET;
 
 // Signup service
-const registerService = async ({ name, email, password, role }) => {
-  const findUser = await db.findUserByProperty('email', email);
+const registerService = async (
+  { name, email, password, role, rest },
+  authUser
+) => {
+  // Check if user with the same email already exists
+  const existingUser = await crudOperation.dbFindPropertyById(
+    Users,
+    'email',
+    email
+  );
+  if (existingUser) {
+    throw takeError('User already exists', 400);
+  }
 
-  if (findUser) throw takeError('User already exist', 400);
+  // Hash the user's password
   const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(password.toString(), salt);
-  return await db.createNewUser({ name, email, password: hash, role });
+  const hashedPassword = await bcrypt.hash(password.toString(), salt);
+
+  // Create a new user by admin
+  const newUser = await crudOperation.dbCreateNewItem(Users, {
+    name,
+    email,
+    password: hashedPassword,
+    role,
+    accountStatus: authUser ? 'Approved' : 'Pending',
+  });
+
+  const userType = newUser.role[0];
+  const userProfileModel = {
+    patient: Patients,
+    doctor: Doctors,
+    admin: Admin,
+  };
+  if (
+    authUser &&
+    authUser.role.includes('admin') &&
+    Object.keys(rest).length > 0
+  ) {
+    const newUserProfile = await crudOperation.dbCreateNewItem(
+      userProfileModel[userType],
+      {
+        userId: newUser._id,
+        ...rest,
+      }
+    );
+    return { user: newUser, profile: newUserProfile };
+  }
+  const userProfile = await crudOperation.dbCreateNewItem(
+    userProfileModel[userType],
+    {
+      userId: newUser._id,
+    }
+  );
+  return { user: roleByUser, userProfile };
 };
 
 // Login service
 const loginService = async ({ email, password }) => {
-  const user = await db.findUserByProperty('email', email);
-  if (!user) throw takeError('user does not exits ', 401);
+  const user = await crudOperation.dbFindPropertyById(Users, 'email', email);
+  if (!user) throw takeError('user does not exits ', 404);
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw takeError('invalid creadientTial');
@@ -36,7 +87,7 @@ const loginService = async ({ email, password }) => {
 
 // user updatee services
 const updateService = async (userId, { name, password, role }) => {
-  const user = await db.findUserByProperty('_id', userId);
+  const user = await crudOperation.dbFindPropertyById(Users, '_id', userId);
   if (!user) {
     throw takeError('User not found', 404);
   }
@@ -69,7 +120,7 @@ const queryService = async (queryValue) => {
       queryObj.role = role;
     }
   }
-  return await db.getUsers(queryObj);
+  return await crudOperation.dbGetItems(User, queryObj);
 };
 
 module.exports = { registerService, loginService, updateService, queryService };
