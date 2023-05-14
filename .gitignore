@@ -1,5 +1,5 @@
 node_modules
-.env
+/.env
 hms-management/server/.env
 client/node_modules
 server/node_modules
