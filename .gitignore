@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-/hms-management/node_modules
-
-=======
 node_modules
->>>>>>> project_base
 .env
+client/node_modules
+server/node_modules
