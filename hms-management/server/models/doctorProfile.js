@@ -5,76 +5,42 @@ const doctorSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users',
   },
-  fullName: {
-    type: String,
-    trim: true,
-    required: true,
-  },
   avatar: {
     type: String,
   },
-  phone: {
-    type: String,
-    trim: true,
-    required: true,
+  hospitalInfo: {
+    position: { type: String },
+    department_name: { type: String },
+    salary: { type: String },
   },
-  age: {
-    type: String,
-    required: true,
-    default: '0',
+  personalInfo: {
+    full_name: {
+      type: String,
+      trim: true,
+    },
+    phone: { type: String },
+    age: { type: String },
+    gender: { type: String },
+    address: { type: String },
+    dmscId: { type: String },
   },
-  address: {
-    type: String,
-    required: true,
-  },
-  dmscId: {
-    type: String,
-    required: true,
-  },
-  skills: {
-    type: [String],
-    required: true,
-  },
+  education: [
+    {
+      school: { type: String },
+      degree: { type: String },
+      fieldofstudy: { type: String },
+      description: { type: String },
+    },
+  ],
+  skills: [String],
   appointment_list: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Appointment',
     },
   ],
-  gigs: [
-    {
-      title: {
-        type: String,
-        required: true,
-      },
-      company: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-      },
-    },
-  ],
-  education: [
-    {
-      school: {
-        type: String,
-        required: true,
-      },
-      degree: {
-        type: String,
-        required: true,
-      },
-      fieldofstudy: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-      },
-    },
-  ],
+  gigs: [],
+
   date: {
     type: Date,
     default: Date.now,

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 // middlware
 const authenticate = require('../../middleware/auth');
-const protectRouter = require('../../middleware/specifiUser');
+const protect = require('../../middleware/specifiUser');
 
 // auth endpoint
 router.use('/api/v1', require('./auth'));
@@ -13,6 +13,12 @@ router.use('/api/v1/patients', authenticate, require('./patient'));
 // Doctor Endpoint
 router.use('/api/v1/doctors', authenticate, require('./doctor'));
 // router.use('/api/v1/admin',authenticate,require('./patient'))
+router.use(
+  '/api/v1/admin/dashborad',
+  authenticate,
+  protect.adminAuth,
+  require('./admin')
+);
 
 // practice items
 
